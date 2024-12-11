@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>알림 등록</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>가격 알림 등록</h1>
+
+<!-- 성공 메시지 -->
+<div th:if="${param.success}" style="color: green;">
+    알림이 성공적으로 등록되었습니다!
+</div>
+
+<!-- 알림 등록 폼 -->
+<form action="/notifications" method="post">
+    <div>
+        <label for="phoneNumber">핸드폰 번호:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" placeholder="01012345678" required>
+    </div>
+    <div>
+        <label for="market">마켓 코드:</label>
+        <input type="text" id="market" name="market" placeholder="KRW-BTC" required>
+    </div>
+    <div>
+        <label for="targetPrice">목표 가격:</label>
+        <input type="number" id="targetPrice" name="targetPrice" step="0.01" required>
+    </div>
+    <div>
+        <label for="direction">방향:</label>
+        <select id="direction" name="direction" required>
+            <option value="UP">상승</option>
+            <option value="DOWN">하락</option>
+            <option value="SAME">동일</option>
+        </select>
+    </div>
+    <button type="submit">등록</button>
+</form>
+</body>
+</html>
