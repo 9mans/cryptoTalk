@@ -21,7 +21,7 @@ public class PriceUpdateScheduler {
     }
 
     // 매 1분 마다 실행
-    @Scheduled(fixedRate = 60000)
+//    @Scheduled(fixedRate = 60000)
     public void updatePrices() {
         try {
             // 모든 마켓 정보 가져오기
