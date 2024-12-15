@@ -20,7 +20,13 @@
     </div>
     <div>
         <label for="market">마켓 코드:</label>
-        <input type="text" id="market" name="market" placeholder="KRW-BTC" required>
+        <select id="market" name="market" required>
+            <option value="" disabled selected>코인을 선택하세요</option>
+            <option th:each="market : ${marketOptions}"
+                    th:value="${market['market']}"
+                    th:text="${market['korean_name']}">
+            </option>
+        </select>
     </div>
     <div>
         <label for="targetPrice">목표 가격:</label>
