@@ -4,6 +4,8 @@ import com.example.cryptotalk.entity.NotificationCondition;
 import com.example.cryptotalk.repository.NotificationConditionRepository;
 import com.example.cryptotalk.service.UpbitService;
 import com.example.cryptotalk.util.AESUtil;
+import io.jsonwebtoken.Jwt;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
