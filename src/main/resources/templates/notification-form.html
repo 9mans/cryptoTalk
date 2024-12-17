@@ -6,9 +6,11 @@
 </head>
 <body>
 <h1>가격 알림 등록</h1>
-
-<!-- 네비게이션 -->
-
+<div>
+    <form id="logoutForm" method="post" action="/logout">
+        <button type="submit">로그아웃</button>
+    </form>
+</div>
 <!-- 성공 메시지 -->
 <div th:if="${param.success}" style="color: green;">
     알림이 성공적으로 등록되었습니다!

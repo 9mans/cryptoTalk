@@ -1,5 +1,6 @@
 package com.example.cryptotalk.config;
 
+import com.example.cryptotalk.security.KakaoLogoutHandler;
 import com.example.cryptotalk.security.OAuth2AuthenticationSuccessHandler;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ public class SecurityConfig {
                         .successHandler(oAuth2AuthenticationSuccessHandler)
                         .failureUrl("/login?error=true"))
                 .logout(logout -> logout.logoutUrl("/logout")
-                        .logoutSuccessUrl("/notifications/new")
+                        .addLogoutHandler(new KakaoLogoutHandler())
                         .deleteCookies("Authorization", "JSESSIONID")
                         .invalidateHttpSession(true)).csrf(csrf -> csrf.disable())
                 .requestCache(requestCache -> requestCache.disable());
