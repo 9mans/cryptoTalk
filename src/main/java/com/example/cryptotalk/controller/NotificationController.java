@@ -5,7 +5,9 @@ import com.example.cryptotalk.repository.NotificationConditionRepository;
 import com.example.cryptotalk.service.UpbitService;
 import com.example.cryptotalk.util.AESUtil;
 import io.jsonwebtoken.Jwt;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,13 +53,27 @@ public class NotificationController {
 
 
     @PostMapping("/notifications")
-    public String addNotification(NotificationCondition condition) {
+    public String addNotification(NotificationCondition condition, Authentication authentication) {
 
         try {
+            // 카카오 OAuth 인증된 사용자 닉네임 가져오기
+            String kakaoNickname = "Unknown"; // 기본값 설정
+            if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
+                OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
+                kakaoNickname = (String) ((Map<String, Object>) oauth2User.getAttribute("properties")).get("nickname");
+            }
+
+            // 닉네임 설정
+            condition.setKakaoNickname(kakaoNickname);
+
+            // 기타 정보 설정
             condition.setPhoneNumber(aesUtil.encrypt(condition.getPhoneNumber()));
             condition.setActive(true);
             condition.setCreatedAt(LocalDateTime.now());
+
+            // 저장
             conditionRepository.save(condition);
+
         } catch (Exception e) {
             e.printStackTrace();
             return "redirect:/notifications/new?error";

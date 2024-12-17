@@ -17,6 +17,9 @@ public class NotificationCondition {
     private String phoneNumber;
 
     @Column(nullable = false)
+    private String kakaoNickname;
+
+    @Column(nullable = false)
     private String market;
 
     @Column(nullable = false, precision = 20, scale = 8)
@@ -50,6 +53,14 @@ public class NotificationCondition {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getKakaoNickname() {
+        return kakaoNickname;
+    }
+
+    public void setKakaoNickname(String kakaoNickname) {
+        this.kakaoNickname = kakaoNickname;
     }
 
     public String getMarket() {
