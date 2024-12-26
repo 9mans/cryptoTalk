@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
 </head>
 <body>
-  <h1>크립토톡(CryptoTalk) 프로젝트 보고서</h1>
+  <h1>크립토톡(CryptoTalk)</h1>
 
   <!-- 1. 프로젝트 개요 -->
   <h2>1. 프로젝트 개요</h2>
