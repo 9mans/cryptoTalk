@@ -48,7 +48,7 @@
     </li>
     <li><strong>데이터베이스:</strong> MySQL 8.0</li>
     <li><strong>빌드 도구:</strong> Gradle</li>
-    <li><strong>형상관리:</strong> Git (민감 정보는 <code>.gitignore</code>에 추가)</li>
+    <li><strong>형상관리:</strong> Git </li>
   </ul>
 
   <!-- 3. 요구사항 -->
@@ -57,9 +57,8 @@
   <ol>
     <li><strong>가상화폐 알림 전송 등록</strong>
       <ul>
-        <li>A. 가상화폐를 지정하고, 알림을 받을 전화번호 입력 및 희망하는 가격대 입력</li>
-        <li>B. 입력된 번호의 형식 유효성 검사, 현재 시세를 UI에 표시</li>
-        <li>C. 알림 가격 설정 완료 시, 가격 도달 시점에 카카오톡으로 알림 전송</li>
+        <li>A. 가상화폐를 지정하고, 알림을 받을 희망하는 가격대 입력</li>
+        <li>B. 알림 가격 설정 완료 시, 가격 도달 시점에 카카오톡으로 알림 전송</li>
       </ul>
     </li>
   </ol>
