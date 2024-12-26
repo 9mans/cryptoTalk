@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>크립토톡(CryptoTalk) 프로젝트 보고서</title>
 </head>
 <body>
   <h1>크립토톡(CryptoTalk) 프로젝트 보고서</h1>
