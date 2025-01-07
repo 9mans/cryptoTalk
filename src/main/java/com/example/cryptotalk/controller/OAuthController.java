@@ -28,7 +28,7 @@ public class OAuthController {
         model.addAttribute("nickname", nickname);
         model.addAttribute("accessToken", accessToken);
 
-        // 추후에 세션이나 레디스에 저장해야함
+
         System.out.println("accessToken" + accessToken);
         System.out.println("nickname" + nickname);
 

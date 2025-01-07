@@ -1,10 +1,13 @@
 package com.example.cryptotalk.controller;
 
 import com.example.cryptotalk.entity.NotificationCondition;
+import com.example.cryptotalk.repository.CryptoPriceRepository;
 import com.example.cryptotalk.repository.NotificationConditionRepository;
+import com.example.cryptotalk.service.NotificationService;
 import com.example.cryptotalk.service.UpbitService;
 import com.example.cryptotalk.util.AESUtil;
 import io.jsonwebtoken.Jwt;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -23,13 +26,17 @@ import java.util.Map;
 public class NotificationController {
 
     private final UpbitService upbitService;
+    private final CryptoPriceRepository cryptoPriceRepository;
     private final NotificationConditionRepository conditionRepository;
+    private final NotificationService notificationService;
     private final AESUtil aesUtil;
 
-    public NotificationController(NotificationConditionRepository conditionRepository, AESUtil aesUtil, UpbitService upbitService) {
+    public NotificationController(CryptoPriceRepository cryptoPriceRepository, NotificationConditionRepository conditionRepository, AESUtil aesUtil, UpbitService upbitService, NotificationService notificationService) {
+        this.cryptoPriceRepository = cryptoPriceRepository;
         this.conditionRepository = conditionRepository;
         this.aesUtil = aesUtil;
         this.upbitService = upbitService;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/notifications/new")
@@ -53,7 +60,7 @@ public class NotificationController {
 
 
     @PostMapping("/notifications")
-    public String addNotification(NotificationCondition condition, Authentication authentication) {
+    public String addNotification(NotificationCondition condition, Authentication authentication, HttpServletRequest request) {
 
         try {
             // 카카오 OAuth 인증된 사용자 닉네임 가져오기
@@ -73,6 +80,7 @@ public class NotificationController {
 
             // 저장
             conditionRepository.save(condition);
+            notificationService.evaluateConditions(condition.getMarket(), cryptoPriceRepository.findByMarket(condition.getMarket()).getPrice(), request);
 
         } catch (Exception e) {
             e.printStackTrace();

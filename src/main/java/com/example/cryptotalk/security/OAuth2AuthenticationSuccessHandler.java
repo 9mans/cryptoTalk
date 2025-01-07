@@ -4,6 +4,7 @@ import com.example.cryptotalk.util.JwtUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -53,13 +54,20 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             nickname = "Anonymous";
         }
 
-        // Extract accessToken from OAuth2AuthorizedClient
         OAuth2AuthorizedClient authorizedClient = clientService.loadAuthorizedClient(
                 "kakao", authentication.getName());
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
 
-        // Store accessToken in session
-        request.getSession().setAttribute("accessToken", accessToken);
+        HttpSession session = request.getSession();
+        session.setAttribute("accessToken", accessToken);
+
+        String storedAccessToken = (String) session.getAttribute("accessToken");
+        if (storedAccessToken != null && storedAccessToken.equals(accessToken)) {
+            logger.debug("Access Token successfully stored in session: {}", storedAccessToken);
+        } else {
+            logger.error("Failed to store Access Token in session. Expected: {}, Found: {}", accessToken, storedAccessToken);
+        }
+
         String token = jwtUtil.createToken(userId, nickname);
 
         logger.info("Successfully authenticated user: " + nickname);
@@ -68,6 +76,5 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         response.setHeader("Authorization", "Bearer " + token);
         response.sendRedirect("/notifications/new");
-
     }
 }
