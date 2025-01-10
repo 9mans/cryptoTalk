@@ -18,12 +18,10 @@ public class CryptoPriceController {
         this.cryptoPriceService = cryptoPriceService;
     }
 
-    // 모든 가격 정보 조회
     public List<CryptoPrice> getAllPrice() {
         return cryptoPriceService.getAllPrice();
     }
 
-    // 특정 가격 정보를 저장
     @PostMapping("/prices")
     public String savePrice(@RequestParam String market, @RequestParam BigDecimal price, @RequestParam String korName) {
         cryptoPriceService.saveOrUpdatePrice(market, price, korName);

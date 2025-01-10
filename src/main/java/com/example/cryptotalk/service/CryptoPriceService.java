@@ -17,7 +17,6 @@ public class CryptoPriceService {
         this.repository = repository;
     }
 
-    // 가격 정보 저장
     public void saveOrUpdatePrice(String market, BigDecimal price, String korName) {
         CryptoPrice cryptoPrice = repository.findByMarket(market);
         if (cryptoPrice == null) {
@@ -31,7 +30,6 @@ public class CryptoPriceService {
         repository.save(cryptoPrice);
     }
 
-    // 모든 가격 정보 조회
     public List<CryptoPrice> getAllPrice() {
         return repository.findAll();
     }

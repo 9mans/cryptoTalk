@@ -19,13 +19,11 @@ public class KakaoLogoutHandler implements LogoutHandler {
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         log.info("=== KakaoLogoutHandler: 로그아웃 시작 ===");
 
-        // 세션에서 액세스 토큰 가져오기
         String accessToken = (String) request.getSession().getAttribute("accessToken");
         if (accessToken != null) {
             log.info("세션에서 액세스 토큰 확인: {}", accessToken);
 
             try {
-                // 1. 카카오 API를 호출해 토큰 무효화
                 RestTemplate restTemplate = new RestTemplate();
                 HttpHeaders headers = new HttpHeaders();
                 headers.set("Authorization", "Bearer " + accessToken);
@@ -34,7 +32,6 @@ public class KakaoLogoutHandler implements LogoutHandler {
                 restTemplate.exchange("https://kapi.kakao.com/v1/user/logout", HttpMethod.POST, entity, String.class);
                 log.info("카카오 로그아웃 API 호출 성공: 토큰 무효화 완료");
 
-                // 2. 세션 무효화
                 request.getSession().invalidate();
                 log.info("세션 무효화 완료");
             } catch (Exception e) {
@@ -45,7 +42,6 @@ public class KakaoLogoutHandler implements LogoutHandler {
         }
 
         try {
-            // 3. 카카오 로그아웃 URL로 리다이렉트
             String logoutUrl = "https://kauth.kakao.com/oauth/logout"
                     + "?client_id=083b230153788952d48383ed1edcf65e"
                     + "&logout_redirect_uri=http://localhost:8080/notification/new";
