@@ -20,28 +20,22 @@ public class PriceUpdateScheduler {
         this.upbitService = upbitService;
     }
 
-    // 매 1분 마다 실행
 //    @Scheduled(fixedRate = 60000)
     public void updatePrices() {
         try {
-            // 모든 마켓 정보 가져오기
             List<Map<String, Object>> markets = upbitService.getMarketAll();
 
-            // 원화 마켓 코드만 추출
             List<String> marketCodes = markets.stream()
                     .map(market -> market.get("market").toString())
                     .filter(market -> market.startsWith("KRW-"))
                     .toList();
 
-            // 각 마켓의 현재가 가져오기
             List<Map<String, Object>> tickerData = upbitService.getTicker(marketCodes);
 
-            // DB 업데이트
             for (Map<String, Object> market : markets) {
                 String marketCode = market.get("market").toString();
                 String korName = market.get("korean_name").toString();
 
-                // 현재가 정보
                 Map<String, Object> ticker = tickerData.stream()
                         .filter(t -> t.get("market").toString().equals(marketCode))
                         .findFirst()

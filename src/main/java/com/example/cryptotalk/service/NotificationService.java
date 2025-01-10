@@ -61,14 +61,12 @@ public class NotificationService {
 
     private void sendNotification(NotificationCondition condition, BigDecimal currentPrice, HttpServletRequest request) {
         try {
-            // 세션에서 액세스 토큰 가져오기
             HttpSession session = request.getSession();
             String accessToken = (String) session.getAttribute("accessToken");
             if (accessToken == null || accessToken.isEmpty()) {
                 throw new IllegalStateException("Access token is missing from session.");
             }
 
-            // KakaoTalk 메시지 템플릿 JSON 문자열 생성
             String templateObject = String.format("""
         {
             "object_type": "text",
@@ -81,19 +79,15 @@ public class NotificationService {
         }
         """, condition.getMarket(), condition.getDirection(), condition.getTargetPrice(), currentPrice, condition.getMarket(), condition.getMarket());
 
-            // 요청 본문 데이터
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             body.add("template_object", templateObject);
 
-            // HTTP 요청 헤더
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             headers.set("Authorization", "Bearer " + accessToken);
 
-            // 요청 생성
             HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
-            // REST 요청 전송
             RestTemplate restTemplate = new RestTemplate();
             String response = restTemplate.postForObject("https://kapi.kakao.com/v2/api/talk/memo/default/send", requestEntity, String.class);
 

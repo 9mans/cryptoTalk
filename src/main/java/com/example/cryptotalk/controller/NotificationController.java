@@ -63,22 +63,18 @@ public class NotificationController {
     public String addNotification(NotificationCondition condition, Authentication authentication, HttpServletRequest request) {
 
         try {
-            // 카카오 OAuth 인증된 사용자 닉네임 가져오기
             String kakaoNickname = "Unknown"; // 기본값 설정
             if (authentication != null && authentication.getPrincipal() instanceof OAuth2User) {
                 OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
                 kakaoNickname = (String) ((Map<String, Object>) oauth2User.getAttribute("properties")).get("nickname");
             }
 
-            // 닉네임 설정
             condition.setKakaoNickname(kakaoNickname);
 
-            // 기타 정보 설정
             condition.setPhoneNumber(aesUtil.encrypt(condition.getPhoneNumber()));
             condition.setActive(true);
             condition.setCreatedAt(LocalDateTime.now());
 
-            // 저장
             conditionRepository.save(condition);
             notificationService.evaluateConditions(condition.getMarket(), cryptoPriceRepository.findByMarket(condition.getMarket()).getPrice(), request);
 

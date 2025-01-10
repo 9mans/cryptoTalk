@@ -7,7 +7,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.List;
 import java.util.Map;
 
-// 업비트 API에 HTTP 요청을 보내기 위한 서비스 클래스를 정의합니다.
 @Service
 public class UpbitService {
 
@@ -18,7 +17,6 @@ public class UpbitService {
     }
 
 
-    // 업비트의 모든 시장 정보를 조회하는 API 호출
     public List<Map<String, Object>> getMarketAll() {
         return webClient.get()
                 .uri("/market/all")
