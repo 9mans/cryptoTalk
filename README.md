@@ -11,7 +11,7 @@
   <ul>
     <li><strong>프로젝트 명:</strong> 크립토톡(CryptoTalk)</li>
     <li><strong>개발 인원:</strong> 1명</li>
-    <li><strong>개발 기간:</strong> 2024년 12월 09일 ~ (진행 중)</li>
+    <li><strong>개발 기간:</strong> 2024년 12월 09일 ~ 2025년 01월 10일</li>
     <li><strong>주요 기능</strong>
       <ul>
         <li>카카오 Oauth2.0 로그인</li>
@@ -19,12 +19,6 @@
           <ul>
             <li>가상화폐 지정 및 알림 가격 설정</li>
             <li>실시간(또는 주기적) 가격 확인 후 알림 발송(카카오톡 메시지 활용)</li>
-          </ul>
-        </li>
-        <li>간단한 게시판
-          <ul>
-            <li>글 작성, 수정, 삭제(CRUD)</li>
-            <li>댓글, 대댓글 기능</li>
           </ul>
         </li>
       </ul>
